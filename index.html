@@ -17,483 +17,116 @@
     --border: rgba(26,24,20,0.12);
     --input-bg: rgba(26,24,20,0.04);
   }
-
   * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--cream); color: var(--dark); font-family: 'DM Sans', sans-serif; font-weight: 300; min-height: 100vh; }
 
-  body {
-    background: var(--cream);
-    color: var(--dark);
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 300;
-    min-height: 100vh;
-  }
+  .hero { position: relative; padding: 80px 48px 60px; border-bottom: 0.5px solid var(--border); overflow: hidden; }
+  .hero::before { content: ''; position: absolute; top: -60px; right: -60px; width: 320px; height: 320px; border-radius: 50%; border: 0.5px solid var(--accent-light); pointer-events: none; }
+  .hero::after { content: ''; position: absolute; bottom: -80px; left: 40px; width: 180px; height: 180px; border-radius: 50%; border: 0.5px solid var(--accent-light); pointer-events: none; }
+  .hero-eyebrow { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; display: flex; align-items: center; gap: 12px; }
+  .hero-eyebrow::before { content: ''; display: block; width: 32px; height: 0.5px; background: var(--accent); }
+  .hero-title { font-family: 'DM Serif Display', serif; font-size: clamp(40px, 7vw, 72px); line-height: 1.05; color: var(--dark); margin-bottom: 6px; }
+  .hero-title em { font-style: italic; color: var(--accent); }
+  .hero-sub { font-size: 14px; color: var(--muted); margin-top: 20px; max-width: 420px; line-height: 1.7; }
 
-  /* ── HERO ── */
-  .hero {
-    position: relative;
-    padding: 80px 48px 60px;
-    border-bottom: 0.5px solid var(--border);
-    overflow: hidden;
-  }
+  .page { max-width: 780px; margin: 0 auto; padding: 0 24px 80px; }
 
-  .hero::before {
-    content: '';
-    position: absolute;
-    top: -60px; right: -60px;
-    width: 320px; height: 320px;
-    border-radius: 50%;
-    border: 0.5px solid var(--accent-light);
-    pointer-events: none;
-  }
-
-  .hero::after {
-    content: '';
-    position: absolute;
-    bottom: -80px; left: 40px;
-    width: 180px; height: 180px;
-    border-radius: 50%;
-    border: 0.5px solid var(--accent-light);
-    pointer-events: none;
-  }
-
-  .hero-eyebrow {
-    font-size: 11px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-  .hero-eyebrow::before {
-    content: '';
-    display: block;
-    width: 32px;
-    height: 0.5px;
-    background: var(--accent);
-  }
-
-  .hero-title {
-    font-family: 'DM Serif Display', serif;
-    font-size: clamp(40px, 7vw, 72px);
-    line-height: 1.05;
-    color: var(--dark);
-    margin-bottom: 6px;
-  }
-
-  .hero-title em {
-    font-style: italic;
-    color: var(--accent);
-  }
-
-  .hero-sub {
-    font-size: 14px;
-    color: var(--muted);
-    margin-top: 20px;
-    max-width: 400px;
-    line-height: 1.7;
-  }
-
-  /* ── LAYOUT ── */
-  .page {
-    max-width: 780px;
-    margin: 0 auto;
-    padding: 0 24px 80px;
-  }
-
-  /* ── PROGRESS ── */
-  .progress-bar {
-    display: flex;
-    align-items: center;
-    gap: 0;
-    padding: 32px 0 0;
-    margin-bottom: 48px;
-  }
-
-  .step {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    flex: 1;
-    position: relative;
-    cursor: pointer;
-  }
-
-  .step:not(:last-child)::after {
-    content: '';
-    position: absolute;
-    top: 14px;
-    left: 50%;
-    width: 100%;
-    height: 0.5px;
-    background: var(--border);
-    z-index: 0;
-    transition: background 0.4s;
-  }
-
+  .progress-bar { display: flex; align-items: center; gap: 0; padding: 32px 0 0; margin-bottom: 48px; }
+  .step { display: flex; flex-direction: column; align-items: center; flex: 1; position: relative; cursor: pointer; }
+  .step:not(:last-child)::after { content: ''; position: absolute; top: 14px; left: 50%; width: 100%; height: 0.5px; background: var(--border); z-index: 0; transition: background 0.4s; }
   .step.done:not(:last-child)::after { background: var(--accent); }
-
-  .step-dot {
-    width: 28px; height: 28px;
-    border-radius: 50%;
-    border: 0.5px solid var(--border);
-    background: var(--cream);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 11px;
-    color: var(--muted);
-    position: relative; z-index: 1;
-    transition: all 0.3s;
-    font-family: 'DM Serif Display', serif;
-  }
-
-  .step.active .step-dot {
-    background: var(--dark);
-    border-color: var(--dark);
-    color: var(--cream);
-  }
-
-  .step.done .step-dot {
-    background: var(--accent);
-    border-color: var(--accent);
-    color: var(--cream);
-  }
-
-  .step-label {
-    font-size: 10px;
-    color: var(--muted);
-    margin-top: 7px;
-    letter-spacing: 0.04em;
-    text-align: center;
-  }
-
+  .step-dot { width: 28px; height: 28px; border-radius: 50%; border: 0.5px solid var(--border); background: var(--cream); display: flex; align-items: center; justify-content: center; font-size: 11px; color: var(--muted); position: relative; z-index: 1; transition: all 0.3s; font-family: 'DM Serif Display', serif; }
+  .step.active .step-dot { background: var(--dark); border-color: var(--dark); color: var(--cream); }
+  .step.done .step-dot { background: var(--accent); border-color: var(--accent); color: var(--cream); }
+  .step-label { font-size: 10px; color: var(--muted); margin-top: 7px; letter-spacing: 0.04em; text-align: center; }
   .step.active .step-label { color: var(--dark); font-weight: 500; }
   .step.done .step-label { color: var(--accent); }
 
-  /* ── PANELS ── */
   .panel { display: none; animation: fadeUp 0.4s ease; }
   .panel.active { display: block; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
 
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(16px); }
-    to   { opacity: 1; transform: translateY(0); }
+  .panel-title { font-family: 'DM Serif Display', serif; font-size: 28px; color: var(--dark); margin-bottom: 6px; }
+  .panel-desc { font-size: 13px; color: var(--muted); margin-bottom: 36px; line-height: 1.6; }
+
+  .field { margin-bottom: 22px; }
+  .field label { display: block; font-size: 12px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--mid); margin-bottom: 8px; }
+  .field .hint { font-size: 11px; color: var(--muted); margin-bottom: 8px; display: block; font-weight: 300; text-transform: none; letter-spacing: 0; line-height: 1.5; }
+  .field .req { color: var(--accent); }
+  .field input[type=text], .field input[type=date], .field input[type=url], .field textarea, .field select {
+    width: 100%; background: var(--input-bg); border: 0.5px solid var(--border); border-radius: 2px;
+    color: var(--dark); font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 300;
+    padding: 13px 16px; outline: none; transition: border-color 0.2s, background 0.2s; appearance: none;
   }
-
-  .panel-title {
-    font-family: 'DM Serif Display', serif;
-    font-size: 28px;
-    color: var(--dark);
-    margin-bottom: 6px;
-  }
-
-  .panel-desc {
-    font-size: 13px;
-    color: var(--muted);
-    margin-bottom: 36px;
-    line-height: 1.6;
-  }
-
-  /* ── FIELDS ── */
-  .field { margin-bottom: 24px; }
-
-  .field label {
-    display: block;
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--mid);
-    margin-bottom: 8px;
-  }
-
-  .field .hint {
-    font-size: 11px;
-    color: var(--muted);
-    margin-bottom: 8px;
-    display: block;
-    font-weight: 300;
-    text-transform: none;
-    letter-spacing: 0;
-  }
-
-  .field input[type=text],
-  .field input[type=date],
-  .field textarea,
-  .field select {
-    width: 100%;
-    background: var(--input-bg);
-    border: 0.5px solid var(--border);
-    border-radius: 2px;
-    color: var(--dark);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 14px;
-    font-weight: 300;
-    padding: 13px 16px;
-    outline: none;
-    transition: border-color 0.2s, background 0.2s;
-    appearance: none;
-  }
-
-  .field input:focus,
-  .field textarea:focus,
-  .field select:focus {
-    border-color: var(--accent);
-    background: rgba(200,169,110,0.04);
-  }
-
-  .field textarea { min-height: 90px; resize: vertical; line-height: 1.6; }
+  .field input:focus, .field textarea:focus, .field select:focus { border-color: var(--accent); background: rgba(200,169,110,0.04); }
+  .field textarea { min-height: 80px; resize: vertical; line-height: 1.6; }
 
   .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 
-  /* ── PILL CHOICES ── */
   .pill-group { display: flex; flex-wrap: wrap; gap: 8px; }
-
-  .pill {
-    display: flex; align-items: center;
-    padding: 8px 16px;
-    border: 0.5px solid var(--border);
-    border-radius: 40px;
-    cursor: pointer;
-    transition: all 0.2s;
-    gap: 7px;
-  }
-
+  .pill { display: flex; align-items: center; padding: 8px 16px; border: 0.5px solid var(--border); border-radius: 40px; cursor: pointer; transition: all 0.2s; gap: 7px; }
   .pill input { display: none; }
-
-  .pill span {
-    font-size: 13px;
-    color: var(--mid);
-    font-weight: 300;
-    white-space: nowrap;
-  }
-
-  .pill:has(input:checked) {
-    background: var(--dark);
-    border-color: var(--dark);
-  }
-
+  .pill span { font-size: 13px; color: var(--mid); font-weight: 300; white-space: nowrap; }
+  .pill:has(input:checked) { background: var(--dark); border-color: var(--dark); }
   .pill:has(input:checked) span { color: var(--cream); }
 
-  /* ── STYLE CARDS ── */
+  .other-input { display: none; margin-top: 8px; width: 100%; background: var(--input-bg); border: 0.5px solid var(--border); border-radius: 2px; color: var(--dark); font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 300; padding: 10px 14px; outline: none; }
+  .other-input:focus { border-color: var(--accent); }
+
   .style-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-
-  .style-card {
-    border: 0.5px solid var(--border);
-    border-radius: 2px;
-    padding: 16px;
-    cursor: pointer;
-    transition: all 0.2s;
-    background: transparent;
-  }
-
+  .style-card { border: 0.5px solid var(--border); border-radius: 2px; padding: 16px; cursor: pointer; transition: all 0.2s; background: transparent; }
   .style-card input { display: none; }
+  .style-card:has(input:checked) { border-color: var(--accent); background: rgba(200,169,110,0.06); }
+  .style-card .style-en { font-family: 'DM Serif Display', serif; font-size: 15px; color: var(--dark); margin-bottom: 4px; }
+  .style-card .style-th { font-size: 11px; color: var(--muted); line-height: 1.4; font-weight: 300; }
 
-  .style-card:has(input:checked) {
-    border-color: var(--accent);
-    background: rgba(200,169,110,0.06);
-  }
+  .ref-note { background: rgba(200,169,110,0.08); border: 0.5px solid rgba(200,169,110,0.3); border-radius: 2px; padding: 12px 16px; margin-top: 10px; display: none; }
+  .ref-note p { font-size: 12px; color: var(--mid); line-height: 1.6; }
+  .ref-note strong { font-weight: 500; color: var(--dark); }
 
-  .style-card .style-en {
-    font-family: 'DM Serif Display', serif;
-    font-size: 15px;
-    color: var(--dark);
-    margin-bottom: 4px;
-  }
+  .pkg-grid { display: flex; flex-direction: column; gap: 8px; }
+  .pkg-card { border: 0.5px solid var(--border); border-radius: 2px; cursor: pointer; transition: all 0.2s; }
+  .pkg-card input { display: none; }
+  .pkg-card:has(input:checked) { border-color: var(--accent); background: rgba(200,169,110,0.05); }
+  .pkg-card label { display: flex; align-items: center; gap: 14px; padding: 14px 18px; cursor: pointer; }
+  .pkg-dot { width: 14px; height: 14px; border-radius: 50%; border: 0.5px solid var(--border); flex-shrink: 0; transition: all 0.2s; }
+  .pkg-card:has(input:checked) .pkg-dot { background: var(--accent); border-color: var(--accent); }
+  .pkg-info { flex: 1; }
+  .pkg-name { font-size: 13px; font-weight: 500; color: var(--dark); margin-bottom: 2px; }
+  .pkg-detail { font-size: 11px; color: var(--muted); line-height: 1.5; }
+  .pkg-price { font-family: 'DM Serif Display', serif; font-size: 16px; color: var(--dark); white-space: nowrap; }
+  .pkg-price-note { font-size: 10px; color: var(--muted); text-align: right; margin-top: 2px; }
 
-  .style-card .style-th {
-    font-size: 11px;
-    color: var(--muted);
-    line-height: 1.4;
-    font-weight: 300;
-  }
+  .price-disclaimer { font-size: 11px; color: var(--accent); margin-top: 8px; display: block; }
 
-  /* ── TERMS ── */
-  .terms {
-    background: rgba(26,24,20,0.03);
-    border: 0.5px solid var(--border);
-    border-radius: 2px;
-    padding: 20px 24px;
-    margin-bottom: 28px;
-  }
+  .terms { background: rgba(26,24,20,0.03); border: 0.5px solid var(--border); border-radius: 2px; padding: 20px 24px; margin-bottom: 28px; }
+  .terms-title { font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--mid); margin-bottom: 14px; }
+  .terms li { font-size: 12px; color: var(--muted); line-height: 1.7; list-style: none; padding-left: 14px; position: relative; margin-bottom: 4px; }
+  .terms li::before { content: '—'; position: absolute; left: 0; color: var(--accent); }
 
-  .terms-title {
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--mid);
-    margin-bottom: 14px;
-  }
-
-  .terms li {
-    font-size: 12px;
-    color: var(--muted);
-    line-height: 1.7;
-    list-style: none;
-    padding-left: 14px;
-    position: relative;
-    margin-bottom: 4px;
-  }
-
-  .terms li::before {
-    content: '—';
-    position: absolute;
-    left: 0;
-    color: var(--accent);
-  }
-
-  /* ── BUTTONS ── */
-  .btn-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 40px;
-    padding-top: 28px;
-    border-top: 0.5px solid var(--border);
-  }
-
-  .btn-back {
-    font-size: 13px;
-    color: var(--muted);
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-family: 'DM Sans', sans-serif;
-    display: flex; align-items: center; gap: 6px;
-    transition: color 0.2s;
-    padding: 0;
-  }
-
+  .btn-row { display: flex; justify-content: space-between; align-items: center; margin-top: 40px; padding-top: 28px; border-top: 0.5px solid var(--border); }
+  .btn-back { font-size: 13px; color: var(--muted); background: none; border: none; cursor: pointer; font-family: 'DM Sans', sans-serif; display: flex; align-items: center; gap: 6px; transition: color 0.2s; padding: 0; }
   .btn-back:hover { color: var(--dark); }
-
-  .btn-next {
-    background: var(--dark);
-    color: var(--cream);
-    border: none;
-    border-radius: 2px;
-    padding: 14px 36px;
-    font-size: 13px;
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 500;
-    letter-spacing: 0.06em;
-    cursor: pointer;
-    transition: all 0.2s;
-    display: flex; align-items: center; gap: 10px;
-  }
-
+  .btn-next { background: var(--dark); color: var(--cream); border: none; border-radius: 2px; padding: 14px 36px; font-size: 13px; font-family: 'DM Sans', sans-serif; font-weight: 500; letter-spacing: 0.06em; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 10px; }
   .btn-next:hover { background: var(--mid); }
   .btn-next:active { transform: scale(0.98); }
 
-  /* ── SUCCESS ── */
-  .success-wrap {
-    text-align: center;
-    padding: 60px 0 40px;
-    display: none;
-  }
-
-  .success-icon {
-    width: 64px; height: 64px;
-    border: 0.5px solid var(--accent);
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    margin: 0 auto 28px;
-    font-size: 24px;
-  }
-
-  .success-title {
-    font-family: 'DM Serif Display', serif;
-    font-size: 36px;
-    color: var(--dark);
-    margin-bottom: 12px;
-  }
-
-  .success-sub {
-    font-size: 14px;
-    color: var(--muted);
-    line-height: 1.8;
-    max-width: 360px;
-    margin: 0 auto 36px;
-  }
-
-  .output-box {
-    background: var(--input-bg);
-    border: 0.5px solid var(--border);
-    border-radius: 2px;
-    padding: 20px 24px;
-    text-align: left;
-    margin-top: 32px;
-  }
-
-  .output-label {
-    font-size: 10px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 12px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .btn-copy {
-    font-size: 11px;
-    padding: 4px 12px;
-    border: 0.5px solid var(--border);
-    border-radius: 2px;
-    background: transparent;
-    color: var(--mid);
-    cursor: pointer;
-    font-family: 'DM Sans', sans-serif;
-    transition: all 0.2s;
-  }
-
+  .success-wrap { text-align: center; padding: 60px 0 40px; display: none; }
+  .success-icon { width: 64px; height: 64px; border: 0.5px solid var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 28px; font-size: 24px; }
+  .success-title { font-family: 'DM Serif Display', serif; font-size: 36px; color: var(--dark); margin-bottom: 12px; }
+  .success-sub { font-size: 14px; color: var(--muted); line-height: 1.8; max-width: 360px; margin: 0 auto 36px; }
+  .output-box { background: var(--input-bg); border: 0.5px solid var(--border); border-radius: 2px; padding: 20px 24px; text-align: left; margin-top: 32px; }
+  .output-label { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
+  .btn-copy { font-size: 11px; padding: 4px 12px; border: 0.5px solid var(--border); border-radius: 2px; background: transparent; color: var(--mid); cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.2s; }
   .btn-copy:hover { border-color: var(--accent); color: var(--accent); }
-
-  .output-box pre {
-    font-size: 12px;
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 300;
-    color: var(--mid);
-    white-space: pre-wrap;
-    line-height: 1.9;
-  }
-
-  .btn-new {
-    margin-top: 20px;
-    background: transparent;
-    border: 0.5px solid var(--border);
-    border-radius: 2px;
-    padding: 12px 28px;
-    font-size: 13px;
-    font-family: 'DM Sans', sans-serif;
-    color: var(--mid);
-    cursor: pointer;
-    transition: all 0.2s;
-  }
+  .output-box pre { font-size: 12px; font-family: 'DM Sans', sans-serif; font-weight: 300; color: var(--mid); white-space: pre-wrap; line-height: 1.9; }
+  .btn-new { margin-top: 20px; background: transparent; border: 0.5px solid var(--border); border-radius: 2px; padding: 12px 28px; font-size: 13px; font-family: 'DM Sans', sans-serif; color: var(--mid); cursor: pointer; transition: all 0.2s; }
   .btn-new:hover { border-color: var(--dark); color: var(--dark); }
 
-  /* ── FOOTER ── */
-  .form-footer {
-    margin-top: 60px;
-    padding-top: 24px;
-    border-top: 0.5px solid var(--border);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .footer-brand {
-    font-family: 'DM Serif Display', serif;
-    font-size: 16px;
-    color: var(--dark);
-  }
-
-  .footer-contact {
-    font-size: 12px;
-    color: var(--muted);
-    text-align: right;
-    line-height: 1.6;
-  }
+  .form-footer { margin-top: 60px; padding-top: 24px; border-top: 0.5px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+  .footer-brand { font-family: 'DM Serif Display', serif; font-size: 16px; color: var(--dark); }
+  .footer-contact { font-size: 12px; color: var(--muted); text-align: right; line-height: 1.6; }
+  .footer-contact a { color: var(--accent); text-decoration: none; }
 
   @media (max-width: 600px) {
     .hero { padding: 52px 24px 44px; }
@@ -510,12 +143,10 @@
 <div class="hero">
   <div class="hero-eyebrow">Food & Beverage Photography</div>
   <h1 class="hero-title">Client<br><em>Brief</em></h1>
-  <p class="hero-sub">กรอกข้อมูลเพื่อให้ได้ภาพที่ตรงกับ brand ของคุณมากที่สุด — ใช้เวลาประมาณ 3 นาที</p>
+  <p class="hero-sub">กรอกข้อมูลเพื่อให้ได้ภาพที่ตรงกับ brand ของคุณมากที่สุด<br>ใช้เวลาประมาณ 3 นาที · ปรึกษาฟรีไม่มีค่าใช้จ่าย</p>
 </div>
 
 <div class="page">
-
-  <!-- PROGRESS -->
   <div class="progress-bar">
     <div class="step active" id="step-1"><div class="step-dot">1</div><div class="step-label">ลูกค้า</div></div>
     <div class="step" id="step-2"><div class="step-dot">2</div><div class="step-label">งาน</div></div>
@@ -529,27 +160,29 @@
     <div class="panel-title">ข้อมูลลูกค้า</div>
     <div class="panel-desc">ข้อมูลพื้นฐานสำหรับติดต่อและออกเอกสาร</div>
     <div class="grid2">
-      <div class="field"><label>ชื่อแบรนด์ / ร้าน *</label><input type="text" id="f-brand" placeholder="เช่น Verymatcha"></div>
-      <div class="field"><label>ชื่อผู้ติดต่อ *</label><input type="text" id="f-contact" placeholder="ชื่อ-นามสกุล"></div>
+      <div class="field"><label>ชื่อแบรนด์ / ร้าน <span class="req">*</span></label><input type="text" id="f-brand" placeholder="ชื่อแบรนด์"></div>
+      <div class="field"><label>ชื่อผู้ติดต่อ <span class="req">*</span></label><input type="text" id="f-contact" placeholder="ชื่อ-นามสกุล"></div>
     </div>
     <div class="grid2">
-      <div class="field"><label>เบอร์ / Line ID *</label><input type="text" id="f-phone" placeholder="0812345678 หรือ @lineid"></div>
-      <div class="field"><label>ช่องทางหลักที่ใช้ภาพ</label>
-        <select id="f-channel">
-          <option value="">เลือกช่องทาง</option>
-          <option>Instagram</option>
-          <option>Facebook</option>
-          <option>เมนูร้าน / สื่อสิ่งพิมพ์</option>
-          <option>เว็บไซต์</option>
-          <option>Shopee / Lazada</option>
-          <option>โฆษณา / billboard</option>
-          <option>หลายช่องทาง</option>
-        </select>
-      </div>
+      <div class="field"><label>เบอร์โทรศัพท์ <span class="req">*</span></label><input type="text" id="f-phone" placeholder="0812345678"></div>
+      <div class="field"><label>Line ID <span class="req">*</span></label><input type="text" id="f-line" placeholder="@lineid หรือ ชื่อ Line"></div>
+    </div>
+    <div class="field">
+      <label>ช่องทางหลักที่ใช้ภาพ</label>
+      <select id="f-channel">
+        <option value="">เลือกช่องทาง</option>
+        <option>Instagram</option>
+        <option>Facebook</option>
+        <option>เมนูร้าน / สื่อสิ่งพิมพ์</option>
+        <option>เว็บไซต์</option>
+        <option>Shopee / Lazada</option>
+        <option>โฆษณา / billboard</option>
+        <option>หลายช่องทาง</option>
+      </select>
     </div>
     <div class="btn-row">
       <span></span>
-      <button class="btn-next" onclick="next(1)">ถัดไป <span>→</span></button>
+      <button class="btn-next" onclick="next(1)">ถัดไป →</button>
     </div>
   </div>
 
@@ -557,23 +190,131 @@
   <div class="panel" id="panel-2">
     <div class="panel-title">รายละเอียดงาน</div>
     <div class="panel-desc">ข้อมูลหลักสำหรับวางแผนการถ่าย</div>
-    <div class="grid2">
-      <div class="field"><label>วันที่ต้องการถ่าย *</label><input type="date" id="f-date"></div>
-      <div class="field"><label>สถานที่ถ่าย *</label><input type="text" id="f-location" placeholder="ที่ร้าน / ส่งสินค้ามา / อื่นๆ"></div>
-    </div>
+
     <div class="field">
-      <label>ประเภทงาน *</label>
+      <label>ประเภทงาน <span class="req">*</span></label>
       <div class="pill-group" id="f-type">
         <label class="pill"><input type="checkbox" value="อาหาร"><span>อาหาร</span></label>
         <label class="pill"><input type="checkbox" value="เครื่องดื่ม"><span>เครื่องดื่ม</span></label>
-        <label class="pill"><input type="checkbox" value="สินค้า / packshot"><span>สินค้า / packshot</span></label>
-        <label class="pill"><input type="checkbox" value="บรรยากาศร้าน"><span>บรรยากาศร้าน</span></label>
-        <label class="pill"><input type="checkbox" value="บุคคล"><span>บุคคล</span></label>
-        <label class="pill"><input type="checkbox" value="เบเกอรี่ / ของหวาน"><span>เบเกอรี่ / ของหวาน</span></label>
+        <label class="pill"><input type="checkbox" value="สินค้า"><span>สินค้า</span></label>
+        <label class="pill" id="pill-other-type"><input type="checkbox" value="อื่น ๆ" id="cb-other-type" onchange="toggleOther('cb-other-type','other-type-input')"><span>อื่น ๆ ระบุ</span></label>
+      </div>
+      <input class="other-input" id="other-type-input" type="text" placeholder="ระบุประเภทงาน...">
+    </div>
+
+    <div class="field">
+      <label>รูปแบบภาพที่ต้องการ</label>
+      <div class="pill-group" id="f-imgtype">
+        <label class="pill"><input type="checkbox" value="จัดพร็อพ"><span>จัดพร็อพ</span></label>
+        <label class="pill"><input type="checkbox" value="Packshot (ฉากขาว)"><span>Packshot (ฉากขาว)</span></label>
       </div>
     </div>
+
+    <div class="field">
+      <label>แพ็คเกจที่สนใจ <span class="req">*</span></label>
+      <span class="hint">*ราคาเป็นเพียงราคาเบื้องต้น อาจมีการปรับตามรายละเอียดงาน</span>
+      <div class="pkg-grid" id="f-package">
+        <div class="pkg-card">
+          <label>
+            <input type="radio" name="pkg" value="Packshot (ส่งสินค้ามาถ่าย)">
+            <div class="pkg-dot"></div>
+            <div class="pkg-info">
+              <div class="pkg-name">Packshot — ส่งสินค้ามาถ่าย</div>
+              <div class="pkg-detail">พื้นขาวหรือสี · retouch พร้อมใช้</div>
+            </div>
+            <div>
+              <div class="pkg-price">฿1,590</div>
+              <div class="pkg-price-note">เริ่มต้น</div>
+            </div>
+          </label>
+        </div>
+        <div class="pkg-card">
+          <label>
+            <input type="radio" name="pkg" value="On-location เฉพาะช่างภาพ 1 ชม">
+            <div class="pkg-dot"></div>
+            <div class="pkg-info">
+              <div class="pkg-name">On-location · เฉพาะช่างภาพ</div>
+              <div class="pkg-detail">1 ชม</div>
+            </div>
+            <div>
+              <div class="pkg-price">฿2,000</div>
+            </div>
+          </label>
+        </div>
+        <div class="pkg-card">
+          <label>
+            <input type="radio" name="pkg" value="On-location เฉพาะช่างภาพ 3 ชม">
+            <div class="pkg-dot"></div>
+            <div class="pkg-info">
+              <div class="pkg-name">On-location · เฉพาะช่างภาพ</div>
+              <div class="pkg-detail">3 ชม</div>
+            </div>
+            <div>
+              <div class="pkg-price">฿4,500</div>
+            </div>
+          </label>
+        </div>
+        <div class="pkg-card">
+          <label>
+            <input type="radio" name="pkg" value="On-location เฉพาะช่างภาพ 7 ชม รวมพัก">
+            <div class="pkg-dot"></div>
+            <div class="pkg-info">
+              <div class="pkg-name">On-location · เฉพาะช่างภาพ</div>
+              <div class="pkg-detail">7 ชม รวมพัก</div>
+            </div>
+            <div>
+              <div class="pkg-price">฿8,500</div>
+            </div>
+          </label>
+        </div>
+        <div class="pkg-card">
+          <label>
+            <input type="radio" name="pkg" value="On-location Full Team 3 ชม">
+            <div class="pkg-dot"></div>
+            <div class="pkg-info">
+              <div class="pkg-name">On-location · Full Team</div>
+              <div class="pkg-detail">3 ชม · ช่างภาพ + สไตลิส + ผู้ช่วย</div>
+            </div>
+            <div>
+              <div class="pkg-price">฿11,500</div>
+            </div>
+          </label>
+        </div>
+        <div class="pkg-card">
+          <label>
+            <input type="radio" name="pkg" value="On-location Full Team 7 ชม รวมพัก">
+            <div class="pkg-dot"></div>
+            <div class="pkg-info">
+              <div class="pkg-name">On-location · Full Team</div>
+              <div class="pkg-detail">7 ชม รวมพัก · ช่างภาพ + สไตลิส + ผู้ช่วย</div>
+            </div>
+            <div>
+              <div class="pkg-price">฿22,000</div>
+            </div>
+          </label>
+        </div>
+        <div class="pkg-card">
+          <label>
+            <input type="radio" name="pkg" value="ยังไม่แน่ใจ / สอบถามเพิ่มเติม">
+            <div class="pkg-dot"></div>
+            <div class="pkg-info">
+              <div class="pkg-name">ยังไม่แน่ใจ / สอบถามเพิ่มเติม</div>
+              <div class="pkg-detail">ช่างภาพจะแนะนำแพ็คเกจที่เหมาะสม</div>
+            </div>
+            <div><div class="pkg-price" style="font-size:13px;color:var(--muted);">—</div></div>
+          </label>
+        </div>
+      </div>
+      <span class="price-disclaimer">* ราคาเป็นเพียงราคาเบื้องต้น ไม่รวมค่าเดินทางต่างจังหวัด</span>
+    </div>
+
     <div class="grid2">
-      <div class="field"><label>จำนวนภาพโดยประมาณ</label>
+      <div class="field">
+        <label>วันที่ต้องการถ่าย <span class="req">*</span></label>
+        <input type="date" id="f-date">
+      </div>
+      <div class="field">
+        <label>จำนวนโดยประมาณ</label>
         <select id="f-qty">
           <option value="">เลือกจำนวน</option>
           <option>น้อยกว่า 10 ภาพ</option>
@@ -583,27 +324,24 @@
           <option>มากกว่า 50 ภาพ</option>
         </select>
       </div>
-      <div class="field"><label>แพ็คเกจที่สนใจ</label>
-        <select id="f-package">
-          <option value="">เลือกแพ็คเกจ</option>
-          <option>Packshot — เริ่ม ฿1,590</option>
-          <option>On-location 1 ชม — ฿2,000</option>
-          <option>On-location 3 ชม — ฿5,000</option>
-          <option>On-location 7 ชม — ฿9,500</option>
-          <option>Full Pack 3 ชม — ฿11,000</option>
-          <option>Full Pack 7 ชม — ฿21,000</option>
-          <option>ยังไม่แน่ใจ</option>
-        </select>
-      </div>
     </div>
+
     <div class="field">
-      <label>รายการสินค้า / เมนูที่ต้องการถ่าย *</label>
-      <span class="hint">ระบุให้ครบ เช่น "กาแฟดำ 1, ลาเต้ 2, เค้ก 3 ชิ้น" หรือ "ทั้งเมนู 15 รายการ"</span>
-      <textarea id="f-items" placeholder="ระบุรายการ..."></textarea>
+      <label>สถานที่ถ่าย</label>
+      <input type="text" id="f-location" placeholder="ที่อยู่ร้าน หรือ ส่งสินค้ามาถ่าย">
+      <span class="hint">แนบลิ้งค์โลเคชั่น (Google Maps) เพื่อประเมินค่าเดินทาง</span>
+      <input type="url" id="f-maplink" placeholder="https://maps.google.com/..." style="margin-top:6px;">
     </div>
+
+    <div class="field">
+      <label>รายการที่ต้องการถ่าย <span class="req">*</span></label>
+      <span class="hint">ระบุคร่าว ๆ เช่น 2 เมนู, 3 สินค้า หรือระบุชื่อได้เลย</span>
+      <textarea id="f-items" placeholder="เช่น กาแฟดำ 1 เมนู, เค้ก 2 ชิ้น / หรือ 5 สินค้า ระบุชื่อทีหลัง"></textarea>
+    </div>
+
     <div class="btn-row">
       <button class="btn-back" onclick="back(2)">← ย้อนกลับ</button>
-      <button class="btn-next" onclick="next(2)">ถัดไป <span>→</span></button>
+      <button class="btn-next" onclick="next(2)">ถัดไป →</button>
     </div>
   </div>
 
@@ -611,9 +349,10 @@
   <div class="panel" id="panel-3">
     <div class="panel-title">สไตล์ & Mood</div>
     <div class="panel-desc">ช่วยให้ภาพตรง brand ของคุณมากที่สุด</div>
+
     <div class="field">
       <label>สไตล์ภาพที่ต้องการ</label>
-      <div class="style-grid">
+      <div class="style-grid" id="f-style">
         <label class="style-card"><input type="checkbox" value="Minimal / Clean"><div class="style-en">Minimal</div><div class="style-th">เรียบ สะอาด เน้นตัวสินค้า</div></label>
         <label class="style-card"><input type="checkbox" value="Moody / Dark"><div class="style-en">Moody</div><div class="style-th">โทนเข้ม ลึก มีอารมณ์</div></label>
         <label class="style-card"><input type="checkbox" value="Bright & Fresh"><div class="style-en">Bright</div><div class="style-th">สว่าง สดใส เป็นธรรมชาติ</div></label>
@@ -622,25 +361,36 @@
         <label class="style-card"><input type="checkbox" value="Casual / Fun"><div class="style-en">Casual</div><div class="style-th">สบายๆ สนุก เข้าถึงง่าย</div></label>
       </div>
     </div>
+
     <div class="field">
       <label>โทนสีที่ต้องการ</label>
       <input type="text" id="f-color" placeholder="เช่น เอิร์ทโทน, เขียว-ขาว, พาสเทล, ตาม brand">
     </div>
+
     <div class="field">
-      <label>มี reference / moodboard ไหม</label>
+      <label>Reference / Moodboard <span class="req">*</span></label>
+      <span class="hint">ส่ง reference คร่าว ๆ ช่วยให้ภาพตรงใจมากขึ้น — ภาพจาก Pinterest, IG หรือคำอธิบายก็ได้</span>
       <div class="pill-group" id="f-ref">
-        <label class="pill"><input type="radio" name="ref" value="มี — จะส่งทาง Line"><span>มี — จะส่งทาง Line</span></label>
-        <label class="pill"><input type="radio" name="ref" value="ไม่มี — ให้ออกแบบ"><span>ไม่มี — ให้ออกแบบ</span></label>
-        <label class="pill"><input type="radio" name="ref" value="มีบางส่วน"><span>มีบางส่วน</span></label>
+        <label class="pill"><input type="radio" name="ref" value="มี — จะส่งทาง Line หลังกรอก form" onchange="showRefNote(this)"><span>มี — ส่งทาง Line</span></label>
+        <label class="pill"><input type="radio" name="ref" value="มีบางส่วน — จะส่งทาง Line" onchange="showRefNote(this)"><span>มีบางส่วน</span></label>
+        <label class="pill"><input type="radio" name="ref" value="ไม่มี — ให้ช่างภาพออกแบบตามสไตล์ที่เลือก" onchange="showRefNote(this)"><span>ไม่มี</span></label>
+      </div>
+      <div class="ref-note" id="ref-note-send">
+        <p><strong>กรุณาส่ง reference มาทาง Line</strong> หลังกรอก form เสร็จ — ภาพจาก Pinterest, IG หรือคำอธิบาย mood ที่ต้องการ ช่วยให้ช่างภาพเตรียมงานได้ตรงใจมากขึ้นครับ</p>
+      </div>
+      <div class="ref-note" id="ref-note-none">
+        <p>ไม่เป็นไรครับ — ช่างภาพจะออกแบบ mood ตามสไตล์ที่เลือกและโทนสีที่ระบุ <strong>แนะนำให้ดูผลงานได้ที่ <a href="https://iammorse.myportfolio.com/" target="_blank" style="color:var(--accent);">iammorse.myportfolio.com</a></strong></p>
       </div>
     </div>
+
     <div class="field">
       <label>สิ่งที่ไม่ต้องการ</label>
       <textarea id="f-dislike" placeholder="เช่น ไม่ชอบโทนเข้มมาก, ไม่ต้องการพื้นขาวล้วน..." style="min-height:70px;"></textarea>
     </div>
+
     <div class="btn-row">
       <button class="btn-back" onclick="back(3)">← ย้อนกลับ</button>
-      <button class="btn-next" onclick="next(3)">ถัดไป <span>→</span></button>
+      <button class="btn-next" onclick="next(3)">ถัดไป →</button>
     </div>
   </div>
 
@@ -648,22 +398,27 @@
   <div class="panel" id="panel-4">
     <div class="panel-title">การเตรียมงาน</div>
     <div class="panel-desc">เพื่อให้วันถ่ายเป็นไปอย่างราบรื่น</div>
+
     <div class="field">
-      <label>ใครเตรียม prop / styling</label>
+      <label>Prop / Styling</label>
       <div class="pill-group" id="f-prop">
-        <label class="pill"><input type="radio" name="prop" value="ช่างภาพเตรียมทั้งหมด"><span>ช่างภาพเตรียมทั้งหมด</span></label>
+        <label class="pill"><input type="radio" name="prop" value="แพ็คช่างภาพ — มีพร็อพเบื้องต้นให้"><span>แพ็คช่างภาพ — พร็อพเบื้องต้น</span></label>
+        <label class="pill"><input type="radio" name="prop" value="แพ็ค Full Team — สไตลิสเตรียมพร็อพให้ (ไม่รวมของสดหรือพร็อพเฉพาะทาง)"><span>Full Team — สไตลิสเตรียมให้</span></label>
         <label class="pill"><input type="radio" name="prop" value="ลูกค้าเตรียมเอง"><span>ลูกค้าเตรียมเอง</span></label>
-        <label class="pill"><input type="radio" name="prop" value="ช่วยกัน"><span>ช่วยกัน</span></label>
       </div>
+      <span class="hint" style="margin-top:8px;">* แพ็ค Full Team: สไตลิสเตรียมพร็อพพื้นฐานให้ ไม่รวมของสดหรือพร็อพเฉพาะทาง</span>
     </div>
+
     <div class="field">
       <label>รูปแบบไฟล์ที่ต้องการ</label>
       <div class="pill-group" id="f-format">
-        <label class="pill"><input type="checkbox" value="JPG พร้อมใช้"><span>JPG พร้อมใช้</span></label>
+        <label class="pill"><input type="checkbox" value="JPEG พร้อมใช้"><span>JPEG พร้อมใช้</span></label>
+        <label class="pill"><input type="checkbox" value="PNG พื้นโปร่งใส (มีค่าบริการเพิ่มเติม)"><span>PNG พื้นโปร่งใส (+)</span></label>
         <label class="pill"><input type="checkbox" value="RAW ต้นฉบับ"><span>RAW ต้นฉบับ</span></label>
-        <label class="pill"><input type="checkbox" value="PNG พื้นโปร่งใส"><span>PNG พื้นโปร่งใส</span></label>
       </div>
+      <span class="hint" style="margin-top:6px;">* PNG พื้นโปร่งใส มีค่าบริการเพิ่มเติม — ช่างภาพจะแจ้งราคาให้ทราบ</span>
     </div>
+
     <div class="field">
       <label>อัตราส่วนภาพ</label>
       <div class="pill-group" id="f-ratio">
@@ -674,21 +429,24 @@
         <label class="pill"><input type="checkbox" value="ตามดุลยพินิจ"><span>ตามดุลยพินิจ</span></label>
       </div>
     </div>
+
     <div class="field">
       <label>ต้องการภาพภายในกี่วัน</label>
       <div class="pill-group" id="f-deadline">
-        <label class="pill"><input type="radio" name="deadline" value="ด่วน 1–2 วัน (มีค่าใช้จ่ายเพิ่ม)"><span>ด่วน 1–2 วัน</span></label>
+        <label class="pill"><input type="radio" name="deadline" value="ด่วน 1–2 วัน (มีค่าใช้จ่ายเพิ่ม)"><span>ด่วน 1–2 วัน (+)</span></label>
         <label class="pill"><input type="radio" name="deadline" value="ปกติ 3–5 วัน"><span>ปกติ 3–5 วัน</span></label>
         <label class="pill"><input type="radio" name="deadline" value="ยืดหยุ่น 7 วัน"><span>ยืดหยุ่น 7 วัน</span></label>
       </div>
     </div>
+
     <div class="field">
       <label>ข้อมูลเพิ่มเติม</label>
-      <textarea id="f-note" placeholder="เช่น มีโลโก้ต้องการใส่ในภาพ, ต้องการ flat lay เป็นหลัก, ร้านมีโต๊ะหินอ่อน..." style="min-height:80px;"></textarea>
+      <textarea id="f-note" placeholder="เช่น ต้องการ flat lay เป็นหลัก, มีโต๊ะหินอ่อน, ต้องการมุม top view..." style="min-height:80px;"></textarea>
     </div>
+
     <div class="btn-row">
       <button class="btn-back" onclick="back(4)">← ย้อนกลับ</button>
-      <button class="btn-next" onclick="next(4)">ถัดไป <span>→</span></button>
+      <button class="btn-next" onclick="next(4)">ถัดไป →</button>
     </div>
   </div>
 
@@ -696,16 +454,19 @@
   <div class="panel" id="panel-5">
     <div class="panel-title">ยืนยันข้อมูล</div>
     <div class="panel-desc">ตรวจสอบเงื่อนไขและส่ง brief ให้ช่างภาพ</div>
+
     <div class="terms">
       <div class="terms-title">เงื่อนไขการให้บริการ</div>
       <ul>
-        <li>ราคาที่แจ้งไม่รวมค่าเดินทางต่างจังหวัด</li>
+        <li>ราคาที่แจ้งเป็นราคาเบื้องต้น ไม่รวมค่าเดินทางต่างจังหวัด</li>
         <li>รวม retouch และแก้ไข 1 รอบ — รอบถัดไปคิดเพิ่ม 500 บาท/ภาพ</li>
-        <li>ส่งงานภายใน 3–7 วันหลังวันถ่าย</li>
-        <li>ไฟล์งานจัดเก็บ 14 วันหลังส่งมอบ กรุณาดาวน์โหลดทันที</li>
+        <li>ส่งงานภายใน 3–7 วันหลังวันถ่าย (แจ้งล่วงหน้าหากต้องการด่วน)</li>
+        <li>ไฟล์งานจัดเก็บ 14 วันหลังส่งมอบ กรุณาดาวน์โหลดและตรวจสอบทันที</li>
+        <li>PNG พื้นโปร่งใสมีค่าบริการเพิ่มเติม ช่างภาพจะแจ้งก่อนดำเนินการ</li>
         <li>ช่างภาพสงวนสิทธิ์นำภาพโปรโมทผลงาน (แจ้งหากไม่ต้องการ)</li>
       </ul>
     </div>
+
     <div class="field">
       <label>นำภาพไปโปรโมทผลงานได้ไหม</label>
       <div class="pill-group" id="f-usage">
@@ -714,9 +475,10 @@
         <label class="pill"><input type="radio" name="usage" value="ไม่ต้องการ"><span>ไม่ต้องการ</span></label>
       </div>
     </div>
+
     <div class="btn-row">
       <button class="btn-back" onclick="back(5)">← ย้อนกลับ</button>
-      <button class="btn-next" onclick="submit()" style="background:#C8A96E; letter-spacing:0.08em;">ส่ง Brief</button>
+      <button class="btn-next" onclick="submitForm()" style="background:var(--accent); letter-spacing:0.08em;">ส่ง Brief</button>
     </div>
   </div>
 
@@ -724,9 +486,9 @@
   <div class="success-wrap" id="success">
     <div class="success-icon">✓</div>
     <div class="success-title">ขอบคุณครับ</div>
-    <div class="success-sub">ได้รับ brief แล้ว จะติดต่อกลับเพื่อยืนยันรายละเอียดและส่งใบเสนอราคาภายใน 24 ชั่วโมงครับ</div>
+    <div class="success-sub">ได้รับ brief แล้ว จะติดต่อกลับภายใน 24 ชั่วโมงครับ<br>หากมี reference กรุณาส่งมาทาง Line ด้วยนะครับ 🙏</div>
     <div class="output-box">
-      <div class="output-label"><span>Brief สรุป — บันทึกไว้ในโฟลเดอร์งาน</span><button class="btn-copy" onclick="copyBrief()">คัดลอก</button></div>
+      <div class="output-label"><span>Brief สรุป — คัดลอกส่ง Line ให้ช่างภาพ</span><button class="btn-copy" onclick="copyBrief()">คัดลอก</button></div>
       <pre id="brief-output"></pre>
     </div>
     <button class="btn-new" onclick="resetAll()">กรอก brief ใหม่</button>
@@ -734,22 +496,69 @@
 
   <div class="form-footer">
     <div class="footer-brand">iammorse</div>
-    <div class="footer-contact">Line: @iammorse · ตอบกลับใน 1 นาที<br>iammorsephotograph.myportfolio.com</div>
+    <div class="footer-contact">
+      <a href="https://iammorse.myportfolio.com/" target="_blank">ดูผลงาน</a> · Line: @iammorse<br>ตอบกลับใน 1 นาที
+    </div>
   </div>
-
 </div>
+
+<!-- Formspree hidden form -->
+<form id="formspree-form" action="https://formspree.io/f/xkokpavg" method="POST" style="display:none;">
+  <input type="hidden" name="แบรนด์" id="fs-brand">
+  <input type="hidden" name="ผู้ติดต่อ" id="fs-contact">
+  <input type="hidden" name="เบอร์โทร" id="fs-phone">
+  <input type="hidden" name="Line ID" id="fs-line">
+  <input type="hidden" name="ช่องทาง" id="fs-channel">
+  <input type="hidden" name="วันถ่าย" id="fs-date">
+  <input type="hidden" name="แพ็คเกจ" id="fs-pkg">
+  <input type="hidden" name="ประเภทงาน" id="fs-type">
+  <input type="hidden" name="รูปแบบภาพ" id="fs-imgtype">
+  <input type="hidden" name="สถานที่" id="fs-location">
+  <input type="hidden" name="ลิ้งค์โลเคชั่น" id="fs-maplink">
+  <input type="hidden" name="รายการถ่าย" id="fs-items">
+  <input type="hidden" name="สไตล์" id="fs-style">
+  <input type="hidden" name="โทนสี" id="fs-color">
+  <input type="hidden" name="Reference" id="fs-ref">
+  <input type="hidden" name="สิ่งที่ไม่ต้องการ" id="fs-dislike">
+  <input type="hidden" name="Prop Styling" id="fs-prop">
+  <input type="hidden" name="รูปแบบไฟล์" id="fs-format">
+  <input type="hidden" name="อัตราส่วน" id="fs-ratio">
+  <input type="hidden" name="Deadline" id="fs-deadline">
+  <input type="hidden" name="หมายเหตุ" id="fs-note">
+  <input type="hidden" name="การใช้ภาพ" id="fs-usage">
+  <input type="hidden" name="_subject" id="fs-subject">
+</form>
 
 <script>
 var currentStep = 1;
 
 function getChecked(id) {
-  return Array.from(document.querySelectorAll('#'+id+' input:checked')).map(x=>x.value).join(', ') || '—';
+  return Array.from(document.querySelectorAll('#'+id+' input:checked')).map(function(x){ return x.value; }).join(', ') || '—';
 }
 function getRadio(name) {
   var el = document.querySelector('input[name='+name+']:checked');
   return el ? el.value : '—';
 }
-function v(id) { return (document.getElementById(id)||{}).value || '—'; }
+function v(id) {
+  var el = document.getElementById(id);
+  return el && el.value && el.value.trim() ? el.value.trim() : '—';
+}
+
+function toggleOther(cbId, inputId) {
+  var cb = document.getElementById(cbId);
+  var inp = document.getElementById(inputId);
+  inp.style.display = cb.checked ? 'block' : 'none';
+}
+
+function showRefNote(radio) {
+  document.getElementById('ref-note-send').style.display = 'none';
+  document.getElementById('ref-note-none').style.display = 'none';
+  if (radio.value.startsWith('มี') || radio.value.startsWith('มีบางส่วน')) {
+    document.getElementById('ref-note-send').style.display = 'block';
+  } else {
+    document.getElementById('ref-note-none').style.display = 'block';
+  }
+}
 
 function updateProgress(step) {
   for (var i = 1; i <= 5; i++) {
@@ -762,14 +571,22 @@ function updateProgress(step) {
 
 function next(from) {
   if (from === 1) {
-    if (!v('f-brand') || v('f-brand')==='—' || !v('f-contact') || v('f-contact')==='—' || !v('f-phone') || v('f-phone')==='—') {
-      alert('กรุณากรอก ชื่อแบรนด์, ชื่อผู้ติดต่อ และเบอร์/Line ให้ครบครับ');
-      return;
-    }
+    if (!v('f-brand') || v('f-brand')==='—') { alert('กรุณากรอกชื่อแบรนด์ครับ'); return; }
+    if (!v('f-contact') || v('f-contact')==='—') { alert('กรุณากรอกชื่อผู้ติดต่อครับ'); return; }
+    if (!v('f-phone') || v('f-phone')==='—') { alert('กรุณากรอกเบอร์โทรครับ'); return; }
+    if (!v('f-line') || v('f-line')==='—') { alert('กรุณากรอก Line ID ครับ'); return; }
   }
   if (from === 2) {
+    var type = getChecked('f-type');
+    if (type === '—') { alert('กรุณาเลือกประเภทงานครับ'); return; }
+    var pkg = getRadio('pkg');
+    if (pkg === '—') { alert('กรุณาเลือกแพ็คเกจครับ'); return; }
     if (!v('f-date') || v('f-date')==='—') { alert('กรุณาระบุวันที่ถ่ายครับ'); return; }
     if (!v('f-items') || v('f-items')==='—') { alert('กรุณาระบุรายการที่ต้องการถ่ายครับ'); return; }
+  }
+  if (from === 3) {
+    var ref = getRadio('ref');
+    if (ref === '—') { alert('กรุณาระบุ reference / moodboard ครับ'); return; }
   }
   document.getElementById('panel-'+from).classList.remove('active');
   currentStep = from + 1;
@@ -786,45 +603,87 @@ function back(from) {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-function submit() {
+function submitForm() {
   var now = new Date();
   var dateStr = now.toLocaleDateString('th-TH',{day:'numeric',month:'long',year:'numeric'});
+  var brand = v('f-brand');
+
+  var otherType = document.getElementById('cb-other-type').checked ? ' / ' + v('other-type-input') : '';
+  var typeVal = getChecked('f-type') + otherType;
 
   var brief =
 '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n' +
 'BRIEF — iammorse photography\n' +
 'สร้างเมื่อ: ' + dateStr + '\n' +
 '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n' +
-'[ ข้อมูลลูกค้า ]\n' +
-'แบรนด์       : ' + v('f-brand') + '\n' +
-'ผู้ติดต่อ    : ' + v('f-contact') + '\n' +
-'โทร/Line     : ' + v('f-phone') + '\n' +
+'[ ลูกค้า ]\n' +
+'แบรนด์       : ' + brand + '\n' +
+'ผู้ติดต่อ     : ' + v('f-contact') + '\n' +
+'เบอร์โทร     : ' + v('f-phone') + '\n' +
+'Line ID      : ' + v('f-line') + '\n' +
 'ช่องทางหลัก  : ' + v('f-channel') + '\n\n' +
-'[ รายละเอียดงาน ]\n' +
-'วันถ่าย      : ' + v('f-date') + '\n' +
-'สถานที่      : ' + v('f-location') + '\n' +
-'ประเภทงาน   : ' + getChecked('f-type') + '\n' +
-'จำนวนภาพ    : ' + v('f-qty') + '\n' +
-'แพ็คเกจ     : ' + v('f-package') + '\n\n' +
-'[ รายการที่ถ่าย ]\n' + v('f-items') + '\n\n' +
-'[ สไตล์ / Mood & Tone ]\n' +
-'สไตล์         : ' + getChecked('f-style') + '\n' +
-'โทนสี         : ' + v('f-color') + '\n' +
-'Reference    : ' + getRadio('ref') + '\n' +
-'ไม่ต้องการ   : ' + v('f-dislike') + '\n\n' +
-'[ การเตรียมงาน ]\n' +
-'Prop/Styling : ' + getRadio('prop') + '\n' +
-'ไฟล์ที่ต้องการ : ' + getChecked('f-format') + '\n' +
-'อัตราส่วน    : ' + getChecked('f-ratio') + '\n' +
-'Deadline     : ' + getRadio('deadline') + '\n\n' +
+'[ งาน ]\n' +
+'วันถ่าย       : ' + v('f-date') + '\n' +
+'ประเภทงาน    : ' + typeVal + '\n' +
+'รูปแบบภาพ    : ' + getChecked('f-imgtype') + '\n' +
+'แพ็คเกจ      : ' + getRadio('pkg') + '\n' +
+'จำนวนภาพ     : ' + v('f-qty') + '\n' +
+'สถานที่       : ' + v('f-location') + '\n' +
+'โลเคชั่น      : ' + v('f-maplink') + '\n\n' +
+'[ รายการถ่าย ]\n' + v('f-items') + '\n\n' +
+'[ สไตล์ ]\n' +
+'สไตล์          : ' + getChecked('f-style') + '\n' +
+'โทนสี          : ' + v('f-color') + '\n' +
+'Reference     : ' + getRadio('ref') + '\n' +
+'ไม่ต้องการ    : ' + v('f-dislike') + '\n\n' +
+'[ เตรียมงาน ]\n' +
+'Prop/Styling  : ' + getRadio('prop') + '\n' +
+'ไฟล์           : ' + getChecked('f-format') + '\n' +
+'อัตราส่วน     : ' + getChecked('f-ratio') + '\n' +
+'Deadline      : ' + getRadio('deadline') + '\n\n' +
 '[ หมายเหตุ ]\n' + v('f-note') + '\n\n' +
 '[ การใช้ภาพ ]\n' +
-'โปรโมทผลงาน : ' + getRadio('usage') + '\n\n' +
+'โปรโมทผลงาน  : ' + getRadio('usage') + '\n\n' +
 '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n' +
 'retouch ฟรี 1 รอบ | ส่งงาน 3–7 วัน | ไฟล์เก็บ 14 วัน\n' +
 '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━';
 
   document.getElementById('brief-output').textContent = brief;
+
+  // Fill Formspree hidden fields
+  document.getElementById('fs-brand').value = brand;
+  document.getElementById('fs-contact').value = v('f-contact');
+  document.getElementById('fs-phone').value = v('f-phone');
+  document.getElementById('fs-line').value = v('f-line');
+  document.getElementById('fs-channel').value = v('f-channel');
+  document.getElementById('fs-date').value = v('f-date');
+  document.getElementById('fs-pkg').value = getRadio('pkg');
+  document.getElementById('fs-type').value = typeVal;
+  document.getElementById('fs-imgtype').value = getChecked('f-imgtype');
+  document.getElementById('fs-location').value = v('f-location');
+  document.getElementById('fs-maplink').value = v('f-maplink');
+  document.getElementById('fs-items').value = v('f-items');
+  document.getElementById('fs-style').value = getChecked('f-style');
+  document.getElementById('fs-color').value = v('f-color');
+  document.getElementById('fs-ref').value = getRadio('ref');
+  document.getElementById('fs-dislike').value = v('f-dislike');
+  document.getElementById('fs-prop').value = getRadio('prop');
+  document.getElementById('fs-format').value = getChecked('f-format');
+  document.getElementById('fs-ratio').value = getChecked('f-ratio');
+  document.getElementById('fs-deadline').value = getRadio('deadline');
+  document.getElementById('fs-note').value = v('f-note');
+  document.getElementById('fs-usage').value = getRadio('usage');
+  document.getElementById('fs-subject').value = '[Brief] ' + brand + ' — ' + v('f-date');
+
+  // Submit to Formspree
+  var form = document.getElementById('formspree-form');
+  if (!form.action.includes('YOUR_FORM_ID')) {
+    fetch(form.action, {
+      method: 'POST',
+      body: new FormData(form),
+      headers: { 'Accept': 'application/json' }
+    });
+  }
 
   for (var i = 1; i <= 5; i++) document.getElementById('panel-'+i).classList.remove('active');
   document.getElementById('success').style.display = 'block';
@@ -841,17 +700,17 @@ function copyBrief() {
 }
 
 function resetAll() {
-  document.querySelectorAll('input[type=text], input[type=date], textarea, select').forEach(function(el){ el.value=''; });
+  document.querySelectorAll('input[type=text], input[type=date], input[type=url], textarea, select').forEach(function(el){ el.value=''; });
   document.querySelectorAll('input[type=checkbox], input[type=radio]').forEach(function(el){ el.checked=false; });
+  document.querySelectorAll('.other-input').forEach(function(el){ el.style.display='none'; });
+  document.getElementById('ref-note-send').style.display='none';
+  document.getElementById('ref-note-none').style.display='none';
   document.getElementById('success').style.display = 'none';
   currentStep = 1;
   document.getElementById('panel-1').classList.add('active');
   updateProgress(1);
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
-
-// style-grid id
-document.querySelector('.style-grid').id = 'f-style';
 </script>
 </body>
 </html>
