@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>iammorse — Client Brief</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F5F0E8;
+    --dark: #1A1814;
+    --mid: #3D3A34;
+    --muted: #8A8680;
+    --accent: #C8A96E;
+    --accent-light: #E8D9B8;
+    --border: rgba(26,24,20,0.12);
+    --input-bg: rgba(26,24,20,0.04);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--cream);
+    color: var(--dark);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    padding: 80px 48px 60px;
+    border-bottom: 0.5px solid var(--border);
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 320px; height: 320px;
+    border-radius: 50%;
+    border: 0.5px solid var(--accent-light);
+    pointer-events: none;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -80px; left: 40px;
+    width: 180px; height: 180px;
+    border-radius: 50%;
+    border: 0.5px solid var(--accent-light);
+    pointer-events: none;
+  }
+
+  .hero-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    display: block;
+    width: 32px;
+    height: 0.5px;
+    background: var(--accent);
+  }
+
+  .hero-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(40px, 7vw, 72px);
+    line-height: 1.05;
+    color: var(--dark);
+    margin-bottom: 6px;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .hero-sub {
+    font-size: 14px;
+    color: var(--muted);
+    margin-top: 20px;
+    max-width: 400px;
+    line-height: 1.7;
+  }
+
+  /* ── LAYOUT ── */
+  .page {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 0 24px 80px;
+  }
+
+  /* ── PROGRESS ── */
+  .progress-bar {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    padding: 32px 0 0;
+    margin-bottom: 48px;
+  }
+
+  .step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    position: relative;
+    cursor: pointer;
+  }
+
+  .step:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    top: 14px;
+    left: 50%;
+    width: 100%;
+    height: 0.5px;
+    background: var(--border);
+    z-index: 0;
+    transition: background 0.4s;
+  }
+
+  .step.done:not(:last-child)::after { background: var(--accent); }
+
+  .step-dot {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    border: 0.5px solid var(--border);
+    background: var(--cream);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px;
+    color: var(--muted);
+    position: relative; z-index: 1;
+    transition: all 0.3s;
+    font-family: 'DM Serif Display', serif;
+  }
+
+  .step.active .step-dot {
+    background: var(--dark);
+    border-color: var(--dark);
+    color: var(--cream);
+  }
+
+  .step.done .step-dot {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--cream);
+  }
+
+  .step-label {
+    font-size: 10px;
+    color: var(--muted);
+    margin-top: 7px;
+    letter-spacing: 0.04em;
+    text-align: center;
+  }
+
+  .step.active .step-label { color: var(--dark); font-weight: 500; }
+  .step.done .step-label { color: var(--accent); }
+
+  /* ── PANELS ── */
+  .panel { display: none; animation: fadeUp 0.4s ease; }
+  .panel.active { display: block; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .panel-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 28px;
+    color: var(--dark);
+    margin-bottom: 6px;
+  }
+
+  .panel-desc {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 36px;
+    line-height: 1.6;
+  }
+
+  /* ── FIELDS ── */
+  .field { margin-bottom: 24px; }
+
+  .field label {
+    display: block;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--mid);
+    margin-bottom: 8px;
+  }
+
+  .field .hint {
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 8px;
+    display: block;
+    font-weight: 300;
+    text-transform: none;
+    letter-spacing: 0;
+  }
+
+  .field input[type=text],
+  .field input[type=date],
+  .field textarea,
+  .field select {
+    width: 100%;
+    background: var(--input-bg);
+    border: 0.5px solid var(--border);
+    border-radius: 2px;
+    color: var(--dark);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    padding: 13px 16px;
+    outline: none;
+    transition: border-color 0.2s, background 0.2s;
+    appearance: none;
+  }
+
+  .field input:focus,
+  .field textarea:focus,
+  .field select:focus {
+    border-color: var(--accent);
+    background: rgba(200,169,110,0.04);
+  }
+
+  .field textarea { min-height: 90px; resize: vertical; line-height: 1.6; }
+
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+  /* ── PILL CHOICES ── */
+  .pill-group { display: flex; flex-wrap: wrap; gap: 8px; }
+
+  .pill {
+    display: flex; align-items: center;
+    padding: 8px 16px;
+    border: 0.5px solid var(--border);
+    border-radius: 40px;
+    cursor: pointer;
+    transition: all 0.2s;
+    gap: 7px;
+  }
+
+  .pill input { display: none; }
+
+  .pill span {
+    font-size: 13px;
+    color: var(--mid);
+    font-weight: 300;
+    white-space: nowrap;
+  }
+
+  .pill:has(input:checked) {
+    background: var(--dark);
+    border-color: var(--dark);
+  }
+
+  .pill:has(input:checked) span { color: var(--cream); }
+
+  /* ── STYLE CARDS ── */
+  .style-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+
+  .style-card {
+    border: 0.5px solid var(--border);
+    border-radius: 2px;
+    padding: 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: transparent;
+  }
+
+  .style-card input { display: none; }
+
+  .style-card:has(input:checked) {
+    border-color: var(--accent);
+    background: rgba(200,169,110,0.06);
+  }
+
+  .style-card .style-en {
+    font-family: 'DM Serif Display', serif;
+    font-size: 15px;
+    color: var(--dark);
+    margin-bottom: 4px;
+  }
+
+  .style-card .style-th {
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.4;
+    font-weight: 300;
+  }
+
+  /* ── TERMS ── */
+  .terms {
+    background: rgba(26,24,20,0.03);
+    border: 0.5px solid var(--border);
+    border-radius: 2px;
+    padding: 20px 24px;
+    margin-bottom: 28px;
+  }
+
+  .terms-title {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--mid);
+    margin-bottom: 14px;
+  }
+
+  .terms li {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.7;
+    list-style: none;
+    padding-left: 14px;
+    position: relative;
+    margin-bottom: 4px;
+  }
+
+  .terms li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+  }
+
+  /* ── BUTTONS ── */
+  .btn-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 40px;
+    padding-top: 28px;
+    border-top: 0.5px solid var(--border);
+  }
+
+  .btn-back {
+    font-size: 13px;
+    color: var(--muted);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    display: flex; align-items: center; gap: 6px;
+    transition: color 0.2s;
+    padding: 0;
+  }
+
+  .btn-back:hover { color: var(--dark); }
+
+  .btn-next {
+    background: var(--dark);
+    color: var(--cream);
+    border: none;
+    border-radius: 2px;
+    padding: 14px 36px;
+    font-size: 13px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex; align-items: center; gap: 10px;
+  }
+
+  .btn-next:hover { background: var(--mid); }
+  .btn-next:active { transform: scale(0.98); }
+
+  /* ── SUCCESS ── */
+  .success-wrap {
+    text-align: center;
+    padding: 60px 0 40px;
+    display: none;
+  }
+
+  .success-icon {
+    width: 64px; height: 64px;
+    border: 0.5px solid var(--accent);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 28px;
+    font-size: 24px;
+  }
+
+  .success-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 36px;
+    color: var(--dark);
+    margin-bottom: 12px;
+  }
+
+  .success-sub {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.8;
+    max-width: 360px;
+    margin: 0 auto 36px;
+  }
+
+  .output-box {
+    background: var(--input-bg);
+    border: 0.5px solid var(--border);
+    border-radius: 2px;
+    padding: 20px 24px;
+    text-align: left;
+    margin-top: 32px;
+  }
+
+  .output-label {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .btn-copy {
+    font-size: 11px;
+    padding: 4px 12px;
+    border: 0.5px solid var(--border);
+    border-radius: 2px;
+    background: transparent;
+    color: var(--mid);
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    transition: all 0.2s;
+  }
+
+  .btn-copy:hover { border-color: var(--accent); color: var(--accent); }
+
+  .output-box pre {
+    font-size: 12px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    color: var(--mid);
+    white-space: pre-wrap;
+    line-height: 1.9;
+  }
+
+  .btn-new {
+    margin-top: 20px;
+    background: transparent;
+    border: 0.5px solid var(--border);
+    border-radius: 2px;
+    padding: 12px 28px;
+    font-size: 13px;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--mid);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-new:hover { border-color: var(--dark); color: var(--dark); }
+
+  /* ── FOOTER ── */
+  .form-footer {
+    margin-top: 60px;
+    padding-top: 24px;
+    border-top: 0.5px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-brand {
+    font-family: 'DM Serif Display', serif;
+    font-size: 16px;
+    color: var(--dark);
+  }
+
+  .footer-contact {
+    font-size: 12px;
+    color: var(--muted);
+    text-align: right;
+    line-height: 1.6;
+  }
+
+  @media (max-width: 600px) {
+    .hero { padding: 52px 24px 44px; }
+    .grid2 { grid-template-columns: 1fr; }
+    .style-grid { grid-template-columns: 1fr 1fr; }
+    .btn-row { flex-direction: column-reverse; gap: 12px; width: 100%; }
+    .btn-next { width: 100%; justify-content: center; }
+    .btn-back { align-self: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-eyebrow">Food & Beverage Photography</div>
+  <h1 class="hero-title">Client<br><em>Brief</em></h1>
+  <p class="hero-sub">กรอกข้อมูลเพื่อให้ได้ภาพที่ตรงกับ brand ของคุณมากที่สุด — ใช้เวลาประมาณ 3 นาที</p>
+</div>
+
+<div class="page">
+
+  <!-- PROGRESS -->
+  <div class="progress-bar">
+    <div class="step active" id="step-1"><div class="step-dot">1</div><div class="step-label">ลูกค้า</div></div>
+    <div class="step" id="step-2"><div class="step-dot">2</div><div class="step-label">งาน</div></div>
+    <div class="step" id="step-3"><div class="step-dot">3</div><div class="step-label">สไตล์</div></div>
+    <div class="step" id="step-4"><div class="step-dot">4</div><div class="step-label">เตรียม</div></div>
+    <div class="step" id="step-5"><div class="step-dot">5</div><div class="step-label">ยืนยัน</div></div>
+  </div>
+
+  <!-- PANEL 1 -->
+  <div class="panel active" id="panel-1">
+    <div class="panel-title">ข้อมูลลูกค้า</div>
+    <div class="panel-desc">ข้อมูลพื้นฐานสำหรับติดต่อและออกเอกสาร</div>
+    <div class="grid2">
+      <div class="field"><label>ชื่อแบรนด์ / ร้าน *</label><input type="text" id="f-brand" placeholder="เช่น Verymatcha"></div>
+      <div class="field"><label>ชื่อผู้ติดต่อ *</label><input type="text" id="f-contact" placeholder="ชื่อ-นามสกุล"></div>
+    </div>
+    <div class="grid2">
+      <div class="field"><label>เบอร์ / Line ID *</label><input type="text" id="f-phone" placeholder="0812345678 หรือ @lineid"></div>
+      <div class="field"><label>ช่องทางหลักที่ใช้ภาพ</label>
+        <select id="f-channel">
+          <option value="">เลือกช่องทาง</option>
+          <option>Instagram</option>
+          <option>Facebook</option>
+          <option>เมนูร้าน / สื่อสิ่งพิมพ์</option>
+          <option>เว็บไซต์</option>
+          <option>Shopee / Lazada</option>
+          <option>โฆษณา / billboard</option>
+          <option>หลายช่องทาง</option>
+        </select>
+      </div>
+    </div>
+    <div class="btn-row">
+      <span></span>
+      <button class="btn-next" onclick="next(1)">ถัดไป <span>→</span></button>
+    </div>
+  </div>
+
+  <!-- PANEL 2 -->
+  <div class="panel" id="panel-2">
+    <div class="panel-title">รายละเอียดงาน</div>
+    <div class="panel-desc">ข้อมูลหลักสำหรับวางแผนการถ่าย</div>
+    <div class="grid2">
+      <div class="field"><label>วันที่ต้องการถ่าย *</label><input type="date" id="f-date"></div>
+      <div class="field"><label>สถานที่ถ่าย *</label><input type="text" id="f-location" placeholder="ที่ร้าน / ส่งสินค้ามา / อื่นๆ"></div>
+    </div>
+    <div class="field">
+      <label>ประเภทงาน *</label>
+      <div class="pill-group" id="f-type">
+        <label class="pill"><input type="checkbox" value="อาหาร"><span>อาหาร</span></label>
+        <label class="pill"><input type="checkbox" value="เครื่องดื่ม"><span>เครื่องดื่ม</span></label>
+        <label class="pill"><input type="checkbox" value="สินค้า / packshot"><span>สินค้า / packshot</span></label>
+        <label class="pill"><input type="checkbox" value="บรรยากาศร้าน"><span>บรรยากาศร้าน</span></label>
+        <label class="pill"><input type="checkbox" value="บุคคล"><span>บุคคล</span></label>
+        <label class="pill"><input type="checkbox" value="เบเกอรี่ / ของหวาน"><span>เบเกอรี่ / ของหวาน</span></label>
+      </div>
+    </div>
+    <div class="grid2">
+      <div class="field"><label>จำนวนภาพโดยประมาณ</label>
+        <select id="f-qty">
+          <option value="">เลือกจำนวน</option>
+          <option>น้อยกว่า 10 ภาพ</option>
+          <option>10–20 ภาพ</option>
+          <option>20–30 ภาพ</option>
+          <option>30–50 ภาพ</option>
+          <option>มากกว่า 50 ภาพ</option>
+        </select>
+      </div>
+      <div class="field"><label>แพ็คเกจที่สนใจ</label>
+        <select id="f-package">
+          <option value="">เลือกแพ็คเกจ</option>
+          <option>Packshot — เริ่ม ฿1,590</option>
+          <option>On-location 1 ชม — ฿2,000</option>
+          <option>On-location 3 ชม — ฿5,000</option>
+          <option>On-location 7 ชม — ฿9,500</option>
+          <option>Full Pack 3 ชม — ฿11,000</option>
+          <option>Full Pack 7 ชม — ฿21,000</option>
+          <option>ยังไม่แน่ใจ</option>
+        </select>
+      </div>
+    </div>
+    <div class="field">
+      <label>รายการสินค้า / เมนูที่ต้องการถ่าย *</label>
+      <span class="hint">ระบุให้ครบ เช่น "กาแฟดำ 1, ลาเต้ 2, เค้ก 3 ชิ้น" หรือ "ทั้งเมนู 15 รายการ"</span>
+      <textarea id="f-items" placeholder="ระบุรายการ..."></textarea>
+    </div>
+    <div class="btn-row">
+      <button class="btn-back" onclick="back(2)">← ย้อนกลับ</button>
+      <button class="btn-next" onclick="next(2)">ถัดไป <span>→</span></button>
+    </div>
+  </div>
+
+  <!-- PANEL 3 -->
+  <div class="panel" id="panel-3">
+    <div class="panel-title">สไตล์ & Mood</div>
+    <div class="panel-desc">ช่วยให้ภาพตรง brand ของคุณมากที่สุด</div>
+    <div class="field">
+      <label>สไตล์ภาพที่ต้องการ</label>
+      <div class="style-grid">
+        <label class="style-card"><input type="checkbox" value="Minimal / Clean"><div class="style-en">Minimal</div><div class="style-th">เรียบ สะอาด เน้นตัวสินค้า</div></label>
+        <label class="style-card"><input type="checkbox" value="Moody / Dark"><div class="style-en">Moody</div><div class="style-th">โทนเข้ม ลึก มีอารมณ์</div></label>
+        <label class="style-card"><input type="checkbox" value="Bright & Fresh"><div class="style-en">Bright</div><div class="style-th">สว่าง สดใส เป็นธรรมชาติ</div></label>
+        <label class="style-card"><input type="checkbox" value="Rustic / Warm"><div class="style-en">Rustic</div><div class="style-th">อบอุ่น ดิบ วินเทจ</div></label>
+        <label class="style-card"><input type="checkbox" value="Luxury / Premium"><div class="style-en">Luxury</div><div class="style-th">หรูหรา มีคลาส high-end</div></label>
+        <label class="style-card"><input type="checkbox" value="Casual / Fun"><div class="style-en">Casual</div><div class="style-th">สบายๆ สนุก เข้าถึงง่าย</div></label>
+      </div>
+    </div>
+    <div class="field">
+      <label>โทนสีที่ต้องการ</label>
+      <input type="text" id="f-color" placeholder="เช่น เอิร์ทโทน, เขียว-ขาว, พาสเทล, ตาม brand">
+    </div>
+    <div class="field">
+      <label>มี reference / moodboard ไหม</label>
+      <div class="pill-group" id="f-ref">
+        <label class="pill"><input type="radio" name="ref" value="มี — จะส่งทาง Line"><span>มี — จะส่งทาง Line</span></label>
+        <label class="pill"><input type="radio" name="ref" value="ไม่มี — ให้ออกแบบ"><span>ไม่มี — ให้ออกแบบ</span></label>
+        <label class="pill"><input type="radio" name="ref" value="มีบางส่วน"><span>มีบางส่วน</span></label>
+      </div>
+    </div>
+    <div class="field">
+      <label>สิ่งที่ไม่ต้องการ</label>
+      <textarea id="f-dislike" placeholder="เช่น ไม่ชอบโทนเข้มมาก, ไม่ต้องการพื้นขาวล้วน..." style="min-height:70px;"></textarea>
+    </div>
+    <div class="btn-row">
+      <button class="btn-back" onclick="back(3)">← ย้อนกลับ</button>
+      <button class="btn-next" onclick="next(3)">ถัดไป <span>→</span></button>
+    </div>
+  </div>
+
+  <!-- PANEL 4 -->
+  <div class="panel" id="panel-4">
+    <div class="panel-title">การเตรียมงาน</div>
+    <div class="panel-desc">เพื่อให้วันถ่ายเป็นไปอย่างราบรื่น</div>
+    <div class="field">
+      <label>ใครเตรียม prop / styling</label>
+      <div class="pill-group" id="f-prop">
+        <label class="pill"><input type="radio" name="prop" value="ช่างภาพเตรียมทั้งหมด"><span>ช่างภาพเตรียมทั้งหมด</span></label>
+        <label class="pill"><input type="radio" name="prop" value="ลูกค้าเตรียมเอง"><span>ลูกค้าเตรียมเอง</span></label>
+        <label class="pill"><input type="radio" name="prop" value="ช่วยกัน"><span>ช่วยกัน</span></label>
+      </div>
+    </div>
+    <div class="field">
+      <label>รูปแบบไฟล์ที่ต้องการ</label>
+      <div class="pill-group" id="f-format">
+        <label class="pill"><input type="checkbox" value="JPG พร้อมใช้"><span>JPG พร้อมใช้</span></label>
+        <label class="pill"><input type="checkbox" value="RAW ต้นฉบับ"><span>RAW ต้นฉบับ</span></label>
+        <label class="pill"><input type="checkbox" value="PNG พื้นโปร่งใส"><span>PNG พื้นโปร่งใส</span></label>
+      </div>
+    </div>
+    <div class="field">
+      <label>อัตราส่วนภาพ</label>
+      <div class="pill-group" id="f-ratio">
+        <label class="pill"><input type="checkbox" value="1:1"><span>1:1</span></label>
+        <label class="pill"><input type="checkbox" value="4:5"><span>4:5</span></label>
+        <label class="pill"><input type="checkbox" value="9:16"><span>9:16</span></label>
+        <label class="pill"><input type="checkbox" value="16:9"><span>16:9</span></label>
+        <label class="pill"><input type="checkbox" value="ตามดุลยพินิจ"><span>ตามดุลยพินิจ</span></label>
+      </div>
+    </div>
+    <div class="field">
+      <label>ต้องการภาพภายในกี่วัน</label>
+      <div class="pill-group" id="f-deadline">
+        <label class="pill"><input type="radio" name="deadline" value="ด่วน 1–2 วัน (มีค่าใช้จ่ายเพิ่ม)"><span>ด่วน 1–2 วัน</span></label>
+        <label class="pill"><input type="radio" name="deadline" value="ปกติ 3–5 วัน"><span>ปกติ 3–5 วัน</span></label>
+        <label class="pill"><input type="radio" name="deadline" value="ยืดหยุ่น 7 วัน"><span>ยืดหยุ่น 7 วัน</span></label>
+      </div>
+    </div>
+    <div class="field">
+      <label>ข้อมูลเพิ่มเติม</label>
+      <textarea id="f-note" placeholder="เช่น มีโลโก้ต้องการใส่ในภาพ, ต้องการ flat lay เป็นหลัก, ร้านมีโต๊ะหินอ่อน..." style="min-height:80px;"></textarea>
+    </div>
+    <div class="btn-row">
+      <button class="btn-back" onclick="back(4)">← ย้อนกลับ</button>
+      <button class="btn-next" onclick="next(4)">ถัดไป <span>→</span></button>
+    </div>
+  </div>
+
+  <!-- PANEL 5 -->
+  <div class="panel" id="panel-5">
+    <div class="panel-title">ยืนยันข้อมูล</div>
+    <div class="panel-desc">ตรวจสอบเงื่อนไขและส่ง brief ให้ช่างภาพ</div>
+    <div class="terms">
+      <div class="terms-title">เงื่อนไขการให้บริการ</div>
+      <ul>
+        <li>ราคาที่แจ้งไม่รวมค่าเดินทางต่างจังหวัด</li>
+        <li>รวม retouch และแก้ไข 1 รอบ — รอบถัดไปคิดเพิ่ม 500 บาท/ภาพ</li>
+        <li>ส่งงานภายใน 3–7 วันหลังวันถ่าย</li>
+        <li>ไฟล์งานจัดเก็บ 14 วันหลังส่งมอบ กรุณาดาวน์โหลดทันที</li>
+        <li>ช่างภาพสงวนสิทธิ์นำภาพโปรโมทผลงาน (แจ้งหากไม่ต้องการ)</li>
+      </ul>
+    </div>
+    <div class="field">
+      <label>นำภาพไปโปรโมทผลงานได้ไหม</label>
+      <div class="pill-group" id="f-usage">
+        <label class="pill"><input type="radio" name="usage" value="ได้เลย"><span>ได้เลย</span></label>
+        <label class="pill"><input type="radio" name="usage" value="ได้ แต่ไม่ระบุชื่อร้าน"><span>ได้ แต่ไม่ระบุชื่อ</span></label>
+        <label class="pill"><input type="radio" name="usage" value="ไม่ต้องการ"><span>ไม่ต้องการ</span></label>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn-back" onclick="back(5)">← ย้อนกลับ</button>
+      <button class="btn-next" onclick="submit()" style="background:#C8A96E; letter-spacing:0.08em;">ส่ง Brief</button>
+    </div>
+  </div>
+
+  <!-- SUCCESS -->
+  <div class="success-wrap" id="success">
+    <div class="success-icon">✓</div>
+    <div class="success-title">ขอบคุณครับ</div>
+    <div class="success-sub">ได้รับ brief แล้ว จะติดต่อกลับเพื่อยืนยันรายละเอียดและส่งใบเสนอราคาภายใน 24 ชั่วโมงครับ</div>
+    <div class="output-box">
+      <div class="output-label"><span>Brief สรุป — บันทึกไว้ในโฟลเดอร์งาน</span><button class="btn-copy" onclick="copyBrief()">คัดลอก</button></div>
+      <pre id="brief-output"></pre>
+    </div>
+    <button class="btn-new" onclick="resetAll()">กรอก brief ใหม่</button>
+  </div>
+
+  <div class="form-footer">
+    <div class="footer-brand">iammorse</div>
+    <div class="footer-contact">Line: @iammorse · ตอบกลับใน 1 นาที<br>iammorsephotograph.myportfolio.com</div>
+  </div>
+
+</div>
+
+<script>
+var currentStep = 1;
+
+function getChecked(id) {
+  return Array.from(document.querySelectorAll('#'+id+' input:checked')).map(x=>x.value).join(', ') || '—';
+}
+function getRadio(name) {
+  var el = document.querySelector('input[name='+name+']:checked');
+  return el ? el.value : '—';
+}
+function v(id) { return (document.getElementById(id)||{}).value || '—'; }
+
+function updateProgress(step) {
+  for (var i = 1; i <= 5; i++) {
+    var el = document.getElementById('step-'+i);
+    el.classList.remove('active','done');
+    if (i < step) el.classList.add('done');
+    else if (i === step) el.classList.add('active');
+  }
+}
+
+function next(from) {
+  if (from === 1) {
+    if (!v('f-brand') || v('f-brand')==='—' || !v('f-contact') || v('f-contact')==='—' || !v('f-phone') || v('f-phone')==='—') {
+      alert('กรุณากรอก ชื่อแบรนด์, ชื่อผู้ติดต่อ และเบอร์/Line ให้ครบครับ');
+      return;
+    }
+  }
+  if (from === 2) {
+    if (!v('f-date') || v('f-date')==='—') { alert('กรุณาระบุวันที่ถ่ายครับ'); return; }
+    if (!v('f-items') || v('f-items')==='—') { alert('กรุณาระบุรายการที่ต้องการถ่ายครับ'); return; }
+  }
+  document.getElementById('panel-'+from).classList.remove('active');
+  currentStep = from + 1;
+  document.getElementById('panel-'+currentStep).classList.add('active');
+  updateProgress(currentStep);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function back(from) {
+  document.getElementById('panel-'+from).classList.remove('active');
+  currentStep = from - 1;
+  document.getElementById('panel-'+currentStep).classList.add('active');
+  updateProgress(currentStep);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function submit() {
+  var now = new Date();
+  var dateStr = now.toLocaleDateString('th-TH',{day:'numeric',month:'long',year:'numeric'});
+
+  var brief =
+'━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n' +
+'BRIEF — iammorse photography\n' +
+'สร้างเมื่อ: ' + dateStr + '\n' +
+'━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n' +
+'[ ข้อมูลลูกค้า ]\n' +
+'แบรนด์       : ' + v('f-brand') + '\n' +
+'ผู้ติดต่อ    : ' + v('f-contact') + '\n' +
+'โทร/Line     : ' + v('f-phone') + '\n' +
+'ช่องทางหลัก  : ' + v('f-channel') + '\n\n' +
+'[ รายละเอียดงาน ]\n' +
+'วันถ่าย      : ' + v('f-date') + '\n' +
+'สถานที่      : ' + v('f-location') + '\n' +
+'ประเภทงาน   : ' + getChecked('f-type') + '\n' +
+'จำนวนภาพ    : ' + v('f-qty') + '\n' +
+'แพ็คเกจ     : ' + v('f-package') + '\n\n' +
+'[ รายการที่ถ่าย ]\n' + v('f-items') + '\n\n' +
+'[ สไตล์ / Mood & Tone ]\n' +
+'สไตล์         : ' + getChecked('f-style') + '\n' +
+'โทนสี         : ' + v('f-color') + '\n' +
+'Reference    : ' + getRadio('ref') + '\n' +
+'ไม่ต้องการ   : ' + v('f-dislike') + '\n\n' +
+'[ การเตรียมงาน ]\n' +
+'Prop/Styling : ' + getRadio('prop') + '\n' +
+'ไฟล์ที่ต้องการ : ' + getChecked('f-format') + '\n' +
+'อัตราส่วน    : ' + getChecked('f-ratio') + '\n' +
+'Deadline     : ' + getRadio('deadline') + '\n\n' +
+'[ หมายเหตุ ]\n' + v('f-note') + '\n\n' +
+'[ การใช้ภาพ ]\n' +
+'โปรโมทผลงาน : ' + getRadio('usage') + '\n\n' +
+'━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n' +
+'retouch ฟรี 1 รอบ | ส่งงาน 3–7 วัน | ไฟล์เก็บ 14 วัน\n' +
+'━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━';
+
+  document.getElementById('brief-output').textContent = brief;
+
+  for (var i = 1; i <= 5; i++) document.getElementById('panel-'+i).classList.remove('active');
+  document.getElementById('success').style.display = 'block';
+  updateProgress(6);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function copyBrief() {
+  navigator.clipboard.writeText(document.getElementById('brief-output').textContent).then(function() {
+    var btn = document.querySelector('.btn-copy');
+    btn.textContent = 'คัดลอกแล้ว ✓';
+    setTimeout(function(){ btn.textContent = 'คัดลอก'; }, 2000);
+  });
+}
+
+function resetAll() {
+  document.querySelectorAll('input[type=text], input[type=date], textarea, select').forEach(function(el){ el.value=''; });
+  document.querySelectorAll('input[type=checkbox], input[type=radio]').forEach(function(el){ el.checked=false; });
+  document.getElementById('success').style.display = 'none';
+  currentStep = 1;
+  document.getElementById('panel-1').classList.add('active');
+  updateProgress(1);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// style-grid id
+document.querySelector('.style-grid').id = 'f-style';
+</script>
+</body>
+</html>
